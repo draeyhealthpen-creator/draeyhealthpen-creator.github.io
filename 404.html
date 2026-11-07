@@ -3,18 +3,27 @@
   <head>
     <meta charset="utf-8">
     <meta name="robots" content="noindex">
-    <title>Redirecting…</title>
+    <title></title>
   </head>
   <body>
-    <p>Redirecting…</p>
+    <p></p>
     <script>
-      const destination =
-        "https://www.kafigonka.com" +
-        window.location.pathname +
-        window.location.search +
-        window.location.hash;
+      const source = new URL(window.location.href);
+      const targetBase = "https://www.kafigonka.com";
 
-      window.location.replace(destination);
+      let path = source.searchParams.get("id");
+
+      if (!path) {
+        path = source.pathname;
+      }
+
+      if (!path || path === "/") {
+        window.location.replace(targetBase + "/");
+      } else {
+        const target = new URL(targetBase);
+        target.pathname = path;
+        window.location.replace(target.href);
+      }
     </script>
   </body>
 </html>
