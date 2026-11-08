@@ -1,29 +1,20 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="robots" content="noindex">
-    <title></title>
-  </head>
-  <body>
-    <p></p>
-    <script>
-      const source = new URL(window.location.href);
-      const targetBase = "https://www.kafigonka.com";
+<head>
+  <meta charset="utf-8">
+  <meta name="robots" content="noindex">
+  <script>
+    const source = new URL(location.href);
+    const path = source.searchParams.get("id") || source.pathname;
+    const target = new URL("https://www.kafigonka.com");
 
-      let path = source.searchParams.get("id");
+    if (path.startsWith("/") && !path.startsWith("//")) {
+      target.pathname = path;
+    }
 
-      if (!path) {
-        path = source.pathname;
-      }
-
-      if (!path || path === "/") {
-        window.location.replace(targetBase + "/");
-      } else {
-        const target = new URL(targetBase);
-        target.pathname = path;
-        window.location.replace(target.href);
-      }
-    </script>
-  </body>
+    target.hash = source.hash;
+    location.replace(target.href);
+  </script>
+</head>
+<body></body>
 </html>
